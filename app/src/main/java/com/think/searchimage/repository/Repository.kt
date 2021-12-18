@@ -10,7 +10,5 @@ import javax.inject.Inject
 
 private const val TAG = "Repository"
 class Repository @Inject constructor(private val apiInterface: ApiInterface) {
-
-
     suspend fun getTrendingRepos():GenericResponse<RepoList> = apiInterface.getTrendingRepos("kotlin",1,20)
 }
