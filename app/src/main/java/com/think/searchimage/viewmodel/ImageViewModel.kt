@@ -1,52 +1,63 @@
 package com.think.searchimage.viewmodel
 
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import com.think.searchimage.model.Event
-import com.think.searchimage.model.FeaturedImages
+import androidx.lifecycle.*
+import com.think.searchimage.extentions.subscribeThem
+import com.think.searchimage.model.*
 import com.think.searchimage.network.newNetwork.FailureResponse
+import com.think.searchimage.remote.Event
+import com.think.searchimage.remote.NetworkResponse
 import com.think.searchimage.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ImageViewModel  @Inject constructor(private val repository: Repository):ViewModel() {
+class ImageViewModel  @Inject constructor(private val repository: Repository):BaseViewModel() {
+    private var _repoMutableLiveData= MutableLiveData<Event<RepoList>>()
+    val repoLiveData:LiveData<Event<RepoList>>
+        get() = _repoMutableLiveData
 
-    var searchLiveData=MutableLiveData<String>()
-
-    var imageLiveData=MediatorLiveData<Event<FeaturedImages?>>()
-    private set
-
-    var failureLiveData=MediatorLiveData<FailureResponse>()
-        private set
-
-    fun getImages(){
-        imageLiveData.addSource(Transformations.switchMap(searchLiveData){
-            it?.let {
-                repository.getFeaturedImages(it,1)
-            }
-        }) {
-            if (it.isSuccessful) {
-                imageLiveData.value = Event(it.data)
-            } else {
-                failureLiveData.value = it.getFailureResponse()
-            }
-
-        }
+    init {
+        getTrendingRepos()
     }
 
-    fun loadMoreImages(page:Int){
 
-        imageLiveData.addSource(repository.getFeaturedImages(searchLiveData.value?:"",page)) {
-            if (it.isSuccessful) {
-                imageLiveData.value = it.data?.let { it1 -> Event(it1) }
-            } else {
-                failureLiveData.value = it.getFailureResponse()
+    private fun getTrendingRepos(){
+        viewModelScope.launch {
+            when (val data=   repository.getTrendingRepos()) {
+                is NetworkResponse.Success -> {
+                    _repoMutableLiveData.value= data.body?.let { Event(it) }
+                }
+                else -> handleError(data)
             }
         }
 
     }
+
+
+  /*  fun getDemoData(){
+        viewModelScope.launch {
+
+            repository.getJsonDemoData()
+                .subscribeThem({
+
+                },
+
+                    {
+
+                    },{
+
+                    },{
+
+                    })
+
+
+        }
+
+    }*/
+
+
 
 }

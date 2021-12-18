@@ -16,25 +16,16 @@ package com.think.searchimage.network.newNetwork
 class FailureResponse {
     var code: Int
     var message: String
-    var status: Status
+    var info: Any? = ""
 
     enum class Status {
         CONNECTION_FAILED, NO_INTERNET, UNKNOWN_ERROR, EMPTY_DATA, SESSION_EXPIRED
     }
 
-    constructor(code: Int, message: String, status: Status) {
+    constructor(code: Int, message: String, info: Any) {
         this.code = code
         this.message = message
-        this.status = status
+        this.info = info
     }
-
-    val isNoNetwork: Boolean
-        get() = status == Status.NO_INTERNET
-
-    val isUnKnownError: Boolean
-        get() = status == Status.UNKNOWN_ERROR
-
-    val isEmptyDataError: Boolean
-        get() = status == Status.EMPTY_DATA
 }
 

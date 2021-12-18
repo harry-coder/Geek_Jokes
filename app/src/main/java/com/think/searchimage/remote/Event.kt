@@ -1,4 +1,4 @@
-package com.think.searchimage.model
+package com.think.searchimage.remote
 
 class Event<T>(private var data: T) {
 
@@ -20,5 +20,7 @@ class Event<T>(private var data: T) {
     fun setData(data: T) {
         this.data = data
     }
+
+
 
 }

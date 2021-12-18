@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">SearchImage</string>
     <string name="search_image">Search Image</string>
+    <string name="search">search</string>
+    <string name="trending_repos">Trending Repos</string>
+    <string name="no_repo">No Repo found</string>
 </resources>

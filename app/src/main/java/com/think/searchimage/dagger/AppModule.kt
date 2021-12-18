@@ -2,6 +2,7 @@ package com.think.searchimage.dagger
 
 import android.content.Context
 import com.think.searchimage.constants.Constants
+import com.think.searchimage.remote.NetworkResponseAdapterFactory
 import com.think.searchimage.requestinterface.ApiInterface
 import dagger.Module
 import dagger.Provides
@@ -23,7 +24,8 @@ internal object AppModule {
     @Singleton
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient?): Retrofit {
-        return Retrofit.Builder().baseUrl(Constants.BASE_URL)
+        return Retrofit.Builder().baseUrl(Constants.BASE_URL_GITHUB)
+            .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
