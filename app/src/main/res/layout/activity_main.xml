@@ -7,85 +7,45 @@
         android:id="@+id/cl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="20dp"
 
         android:clickable="true"
         android:focusable="true">
 
-
-        <FrameLayout
-            android:id="@+id/fl_top"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textView48"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:lineSpacingExtra="-2sp"
-                android:text="@string/trending_repos"
-                android:textColor="#1a1a1a"
-                android:textSize="20sp"
-                android:textStyle="normal"
-                app:layout_constraintBottom_toBottomOf="@+id/im_back"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/im_back"
-                app:layout_constraintTop_toTopOf="@+id/im_back" />
-
-
-
-
-
-        </FrameLayout>
-
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchview"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/search_bg"
-            android:lineSpacingExtra="7sp"
-            android:textColor="#8a8a8a"
-            android:textSize="13sp"
-            android:textStyle="normal"
-            app:iconifiedByDefault="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fl_top"
-            app:queryBackground="@android:color/transparent"
-            app:queryHint="@string/search" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_media"
+        <!--<androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchview"
-            tools:listitem="@layout/item_media" />
+            app:layout_constraintTop_toTopOf="parent" />-->
 
 
-        <include
-            android:id="@+id/include_shimmer"
-            layout="@layout/shimmer_layout"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/bottom_sheet_container"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="110dp"
+            app:layout_behavior="@string/bottom_sheet_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchview" />
+            app:layout_constraintStart_toStartOf="parent">
 
+
+            <!-- include bottom sheet -->
+            <include layout="@layout/layout_coordinates_bottom_sheet" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fb_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_40"
+                android:src="@drawable/ic_add"
+                app:layout_anchor="@+id/bottom_sheet"
+                app:layout_anchorGravity="top|end" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,4 +4,7 @@
     <string name="search">search</string>
     <string name="trending_repos">Trending Repos</string>
     <string name="no_repo">No Repo found</string>
+    <string name="property_name">Property Name</string>
+    <string name="property_coordinates">Property Coordinates</string>
+    <string name="submit">Submit</string>
 </resources>

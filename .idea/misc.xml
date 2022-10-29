@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable/search_bg.xml" value="0.2546875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19655797101449277" />
         <entry key="app/src/main/res/layout/item_media.xml" value="0.19655797101449277" />
+        <entry key="app/src/main/res/layout/layout_coordinates_bottom_sheet.xml" value="0.2907692307692308" />
         <entry key="app/src/main/res/layout/shimmer_layout.xml" value="0.23854166666666668" />
       </map>
     </option>
