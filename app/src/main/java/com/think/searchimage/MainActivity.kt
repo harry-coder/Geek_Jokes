@@ -2,11 +2,13 @@ package com.think.searchimage
 
 import android.os.Bundle
 import android.view.View
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.think.searchimage.adapters.MediaAdapter
 import com.think.searchimage.constants.OnItemClickListener
 import com.think.searchimage.constants.OnNoResultFoundListener
@@ -14,6 +16,7 @@ import com.think.searchimage.databinding.ActivityMainBinding
 import com.think.searchimage.extentions.showToastLong
 import com.think.searchimage.viewmodel.ImageViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.shimmer_layout.view.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -26,6 +29,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: MediaAdapter
     private val viewModel: ImageViewModel by viewModels()
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,21 +41,88 @@ class MainActivity : AppCompatActivity() {
             executePendingBindings()
 
         }
-        startShimmer()
+      /*  startShimmer()
         setObservers()
         setRecyclerView()
+        setListeners()*/
+
         setListeners()
     }
 
-    private fun startShimmer(){
+
+    private fun setListeners(){
+
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetContainer)
+
+        bottomSheetBehavior.isFitToContents = false
+        bottomSheetBehavior.halfExpandedRatio = 0.7f
+
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+
+                    }
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+
+                    }
+                }
+            }
+
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+               /* val paramsSearch: RelativeLayout.LayoutParams = binding.llSearch.layoutParams as RelativeLayout.LayoutParams
+                val top = appUtils.getDisplayMatrix(activity!!).heightPixels - bottomSheet.top
+                paramsSearch.setMargins(0, 0, 0, top - ResourceUtil.instance?.getDimen(R.dimen.dp_110)!!)
+                binding.llSearch.layoutParams = paramsSearch
+
+                if (slideOffset > 0.7) {
+                    binding.llCreate.visibility = View.INVISIBLE
+                    binding.llSearch.visibility=View.INVISIBLE
+
+                } else{
+                    binding.llCreate.visibility = View.VISIBLE
+                    binding.llSearch.visibility=View.VISIBLE
+
+                }*/
+            }
+
+        })
+
+        fb_add.setOnClickListener {
+            if(bottomSheetBehavior.state==BottomSheetBehavior.STATE_COLLAPSED){
+                bottomSheetBehavior.state=BottomSheetBehavior.STATE_EXPANDED
+
+            }
+            else bottomSheetBehavior.state=BottomSheetBehavior.STATE_COLLAPSED
+
+
+        }
+
+    }
+    /*private fun startShimmer(){
         binding.includeShimmer.userShimmer.visibility=View.VISIBLE
         binding.includeShimmer.userShimmer.startShimmerAnimation()
     }
     private fun stopShimmer(){
         binding.includeShimmer.userShimmer.visibility=View.GONE
         binding.includeShimmer.userShimmer.stopShimmerAnimation()
-    }
-    private fun setObservers() {
+    }*/
+
+
+   /* private fun setObservers() {
         viewModel.repoLiveData.observe(this) {
             if (it != null) {
                 if (it.peekContent() != null) {
@@ -104,7 +176,7 @@ class MainActivity : AppCompatActivity() {
         })
         adapter.hasStableIds()
         binding.rvMedia.adapter = adapter
-    }
+    }*/
 
 
 
