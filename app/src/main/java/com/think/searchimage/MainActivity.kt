@@ -17,6 +17,7 @@ import com.think.searchimage.extentions.showToastLong
 import com.think.searchimage.viewmodel.ImageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_coordinates_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.shimmer_layout.view.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -34,13 +35,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
 
-        binding.apply {
-            lifecycleOwner = this@MainActivity
-            executePendingBindings()
-
+         binding.root.also {
+            setContentView(it)
         }
+
+
       /*  startShimmer()
         setObservers()
         setRecyclerView()
@@ -52,10 +53,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setListeners(){
 
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetContainer)
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.includeLayout)
 
-        bottomSheetBehavior.isFitToContents = false
-        bottomSheetBehavior.halfExpandedRatio = 0.7f
+
 
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     BottomSheetBehavior.STATE_EXPANDED -> {
 
+                        binding.fbAdd.show()
                     }
                     BottomSheetBehavior.STATE_HALF_EXPANDED -> {
 
