@@ -57,7 +57,7 @@
                 app:fabSize="normal"
                 app:layout_anchorGravity="top|end"
               app:layout_anchor="@id/include_layout"
-                />
+                android:contentDescription="@string/location" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

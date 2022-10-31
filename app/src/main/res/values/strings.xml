@@ -2,7 +2,7 @@
     <string name="app_name">SearchImage</string>
     <string name="search_image">Search Image</string>
     <string name="search">search</string>
-    <string name="trending_repos">Trending Repos</string>
+    <string name="trending_repos">UserLoc</string>
     <string name="no_repo">No Repo found</string>
     <string name="property_name">Property Name</string>
     <string name="property_coordinates">Property Coordinates</string>
@@ -10,4 +10,9 @@
     <string name="enable_gps">Enable GPS</string>
     <string name="required_for_this_app">Require Location Permission</string>
     <string name="enable_now">Enable Now</string>
+    <string name="no_permission">All permissions are not accepted</string>
+    <string name="enter_name">Please Enter Name</string>
+    <string name="enter_coor">Please Enter Coordinates</string>
+    <string name="data_saved">Data Saved</string>
+    <string name="location">location</string>
 </resources>

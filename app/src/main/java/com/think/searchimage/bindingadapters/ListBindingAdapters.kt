@@ -6,17 +6,9 @@ import android.text.SpannableString
 import android.text.style.StyleSpan
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.think.searchimage.R
-import com.think.searchimage.adapters.MediaAdapter
-import com.think.searchimage.constants.OnItemClickListener
-import com.think.searchimage.constants.OnNoResultFoundListener
-import com.think.searchimage.model.RepoList
-import com.think.searchimage.viewmodel.ImageViewModel
-import org.jetbrains.annotations.Nullable
 
 @BindingAdapter("imageAvatar")
  fun imageAvatar(view: ImageView,url:String?){

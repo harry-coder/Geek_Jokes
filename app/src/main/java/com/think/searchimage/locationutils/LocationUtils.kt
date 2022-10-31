@@ -35,8 +35,12 @@ object LocationUtils {
             .setTitle(context.getString(R.string.enable_gps))
             .setMessage(context.getString(R.string.required_for_this_app))
             .setCancelable(false)
-            .setPositiveButton(context.getString(R.string.enable_now)) { _, _ ->
+
+            .setPositiveButton(context.getString(R.string.enable_now)) { view_,_ ->
+                view_.dismiss()
+
                 context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+
             }
             .show()
     }

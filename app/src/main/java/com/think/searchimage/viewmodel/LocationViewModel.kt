@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.maps.model.LatLng
 import com.think.searchimage.database.DBHelper
 import com.think.searchimage.database.entity.LocationEntity
 import com.think.searchimage.model.RepoList
@@ -17,26 +18,12 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class ImageViewModel @Inject constructor(
+class LocationViewModel @Inject constructor(
     private val repository: Repository,
     private val dbHelper: DBHelper
 ) : BaseViewModel() {
-    private var _repoMutableLiveData = MutableLiveData<Event<RepoList>>()
-    val repoLiveData: LiveData<Event<RepoList>>
-        get() = _repoMutableLiveData
 
-
-    private fun getTrendingRepos() {
-        viewModelScope.launch {
-            when (val data = repository.getTrendingRepos()) {
-                is NetworkResponse.Success -> {
-                    _repoMutableLiveData.value = data.body?.let { Event(it) }
-                }
-                else -> handleError(data)
-            }
-        }
-
-    }
+     var centerLatLng: LatLng = LatLng(28.606075, 77.361916) // default lat lgn
 
 
     fun saveLocationData(userLocation: LocationEntity) = liveData<Event<Long?>> {
@@ -46,26 +33,6 @@ class ImageViewModel @Inject constructor(
     }
 
 
-    /*  fun getDemoData(){
-          viewModelScope.launch {
-
-              repository.getJsonDemoData()
-                  .subscribeThem({
-
-                  },
-
-                      {
-
-                      },{
-
-                      },{
-
-                      })
-
-
-          }
-
-      }*/
 
 
 }
