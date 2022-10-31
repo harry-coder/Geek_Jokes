@@ -1,34 +1,36 @@
 package com.think.searchimage.viewmodel
 
-import androidx.lifecycle.*
-import com.think.searchimage.extentions.subscribeThem
-import com.think.searchimage.model.*
-import com.think.searchimage.network.newNetwork.FailureResponse
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import com.think.searchimage.database.DBHelper
+import com.think.searchimage.database.entity.LocationEntity
+import com.think.searchimage.model.RepoList
 import com.think.searchimage.remote.Event
 import com.think.searchimage.remote.NetworkResponse
 import com.think.searchimage.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class ImageViewModel  @Inject constructor(private val repository: Repository):BaseViewModel() {
-    private var _repoMutableLiveData= MutableLiveData<Event<RepoList>>()
-    val repoLiveData:LiveData<Event<RepoList>>
+class ImageViewModel @Inject constructor(
+    private val repository: Repository,
+    private val dbHelper: DBHelper
+) : BaseViewModel() {
+    private var _repoMutableLiveData = MutableLiveData<Event<RepoList>>()
+    val repoLiveData: LiveData<Event<RepoList>>
         get() = _repoMutableLiveData
 
-    init {
-        getTrendingRepos()
-    }
 
-
-    private fun getTrendingRepos(){
+    private fun getTrendingRepos() {
         viewModelScope.launch {
-            when (val data=   repository.getTrendingRepos()) {
+            when (val data = repository.getTrendingRepos()) {
                 is NetworkResponse.Success -> {
-                    _repoMutableLiveData.value= data.body?.let { Event(it) }
+                    _repoMutableLiveData.value = data.body?.let { Event(it) }
                 }
                 else -> handleError(data)
             }
@@ -37,27 +39,33 @@ class ImageViewModel  @Inject constructor(private val repository: Repository):Ba
     }
 
 
-  /*  fun getDemoData(){
-        viewModelScope.launch {
-
-            repository.getJsonDemoData()
-                .subscribeThem({
-
-                },
-
-                    {
-
-                    },{
-
-                    },{
-
-                    })
-
-
+    fun saveLocationData(userLocation: LocationEntity) = liveData<Event<Long?>> {
+        withContext(Dispatchers.IO) {
+            emit(Event(dbHelper.locationDao().insert(userLocation)))
         }
+    }
 
-    }*/
 
+    /*  fun getDemoData(){
+          viewModelScope.launch {
+
+              repository.getJsonDemoData()
+                  .subscribeThem({
+
+                  },
+
+                      {
+
+                      },{
+
+                      },{
+
+                      })
+
+
+          }
+
+      }*/
 
 
 }

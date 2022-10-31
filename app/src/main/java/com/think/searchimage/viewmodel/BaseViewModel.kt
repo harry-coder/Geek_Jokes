@@ -17,7 +17,7 @@ open class BaseViewModel : ViewModel() {
     var failureResponseLiveData: MutableLiveData<Event<FailureResponse>> = MutableLiveData()
 
 
-    fun handleError(data: NetworkResponse<*, BaseError>) {
+  protected  fun handleError(data: NetworkResponse<*, BaseError>) {
         when (data) {
             is NetworkResponse.ApiError -> {
                 showApiError(data.body)
@@ -31,19 +31,19 @@ open class BaseViewModel : ViewModel() {
         }
     }
 
-    fun showApiError(error: BaseError) {
+    private fun showApiError(error: BaseError) {
 
         failureResponseLiveData.value =
             Event(FailureResponse(error.code.toInt(), error.message, error.detail))
 
     }
 
-    fun showNetworkError(exception: IOException) {
+    private fun showNetworkError(exception: IOException) {
         failureResponseLiveData.value =
             Event(FailureResponse(0, "No internet connection", exception.localizedMessage))
     }
 
-    fun showUnknownError(t: Throwable?) {
+    private fun showUnknownError(t: Throwable?) {
         if (t != null) {
             failureResponseLiveData.value =
                 Event(FailureResponse(0, t.message ?: "", t.localizedMessage))

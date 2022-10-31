@@ -7,4 +7,7 @@
     <string name="property_name">Property Name</string>
     <string name="property_coordinates">Property Coordinates</string>
     <string name="submit">Submit</string>
+    <string name="enable_gps">Enable GPS</string>
+    <string name="required_for_this_app">Require Location Permission</string>
+    <string name="enable_now">Enable Now</string>
 </resources>

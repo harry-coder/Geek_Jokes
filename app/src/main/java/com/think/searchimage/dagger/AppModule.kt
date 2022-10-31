@@ -1,7 +1,9 @@
 package com.think.searchimage.dagger
 
 import android.content.Context
+import androidx.room.Room
 import com.think.searchimage.constants.Constants
+import com.think.searchimage.database.DBHelper
 import com.think.searchimage.remote.NetworkResponseAdapterFactory
 import com.think.searchimage.requestinterface.ApiInterface
 import dagger.Module
@@ -60,5 +62,20 @@ internal object AppModule {
         return retrofit.create<ApiInterface>(ApiInterface::class.java)
     }
 
+
+    @Singleton
+    @Provides
+    fun getDatabase(@ApplicationContext context: Context): DBHelper {
+
+
+            return Room.databaseBuilder(
+                context, DBHelper::class.java, "location_Db"
+            )
+                // Wipes and rebuilds instead of migrating if no Migration object.
+                .fallbackToDestructiveMigration()
+                .build()
+
+
+    }
 
 }
