@@ -66,10 +66,8 @@ internal object AppModule {
     @Singleton
     @Provides
     fun getDatabase(@ApplicationContext context: Context): DBHelper {
-
-
             return Room.databaseBuilder(
-                context, DBHelper::class.java, "location_Db"
+                context, DBHelper::class.java, "joke_Db"
             )
                 // Wipes and rebuilds instead of migrating if no Migration object.
                 .fallbackToDestructiveMigration()

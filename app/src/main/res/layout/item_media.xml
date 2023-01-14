@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="repo"
             type="com.think.searchimage.model.Repo" />
@@ -14,85 +16,37 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
+        android:layout_height="80dp"
         android:layout_margin="10dp"
         app:cardCornerRadius="5dp"
-        app:cardElevation="5dp"
-        android:layout_height="wrap_content">
+        app:cardElevation="5dp">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="4dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="3dp"
             android:layout_marginBottom="4dp">
 
-            <!--<com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/iv_media_thumb"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="3dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_placeholder"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="H,1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:roundedCornerRadius="8dp"
-            />-->
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageView"
-                app:shapeAppearanceOverlay="@style/circle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                app:imageAvatar="@{repo.owner.avatar_url}"
-                app:layout_constraintEnd_toStartOf="@+id/textView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
 
-            <TextView
-                android:id="@+id/textView"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_joke"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                app:repoName="@{repo.name}"
-                android:textSize="15sp"
-                android:maxLines="2"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:maxLines="3"
+                android:scrollHorizontally="true"
                 android:ellipsize="end"
                 android:textColor="@android:color/black"
-                app:layout_constraintBottom_toTopOf="@+id/textView2"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{repo.description}"
-                android:maxLines="3"
-                android:ellipsize="end"
-                app:layout_constraintBottom_toTopOf="@+id/textView3"
-                app:layout_constraintEnd_toEndOf="@+id/textView"
-                app:layout_constraintStart_toStartOf="@+id/textView"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-            <ImageView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_check"
-                android:visibility="@{repo.selected?View.VISIBLE:View.GONE,default=gone}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

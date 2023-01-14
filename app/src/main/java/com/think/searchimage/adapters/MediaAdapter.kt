@@ -12,16 +12,17 @@ import com.think.searchimage.R
 import com.think.searchimage.constants.OnItemClickListener
 import com.think.searchimage.constants.OnNoResultFoundListener
 import com.think.searchimage.databinding.ItemMediaBinding
+import com.think.searchimage.model.Joke
 import com.think.searchimage.model.Repo
 import java.util.*
 
 
 class MediaAdapter(
-    var context: Context,val onClickListener: OnItemClickListener,val noResultFound:OnNoResultFoundListener
-) : RecyclerView.Adapter<MediaAdapter.ItemViewHolder>(),Filterable {
+    var context: Context
+) : RecyclerView.Adapter<MediaAdapter.ItemViewHolder>() {
 
-    var fullList: ArrayList<Repo> = arrayListOf()
-    var filteredList = ArrayList<Repo>()
+    var jokesList = ArrayList<Joke>()
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MediaAdapter.ItemViewHolder {
@@ -41,59 +42,32 @@ class MediaAdapter(
 
 
     override fun onBindViewHolder(viewHolder: MediaAdapter.ItemViewHolder, position: Int) =
-        viewHolder.bind(filteredList[position])
+        viewHolder.bind(jokesList[position].jokeName)
 
 
 
     override fun getItemCount(): Int =
-        if (filteredList.isNotEmpty()) filteredList.size
+        if (jokesList.isNotEmpty()) jokesList.size
         else 0
 
 
-    fun setSource(repoList: List<Repo>) {
-        filteredList.addAll(repoList)
-        fullList.addAll(repoList)
+    fun setDataLast(joke:ArrayList<Joke>){
+        jokesList.addAll(joke)
         notifyDataSetChanged()
     }
 
-    inner class ItemViewHolder(val binding: ItemMediaBinding) :
+    inner class ItemViewHolder(private val binding: ItemMediaBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(repo: Repo) {
-            binding.setVariable(BR.repo, repo)
-            binding.root.setOnClickListener {
-                onClickListener.onItemClicked(absoluteAdapterPosition)
-            }
+        fun bind(joke: String) {
+
+            binding.tvJoke.text=joke
+
+            //binding.setVariable(BR.repo, repo)
+
         }
     }
 
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val filterList = arrayListOf<Repo?>()
-                if (constraint.isNullOrEmpty()) {
-                    filterList.addAll(fullList)
-                } else {
-                    for (row in fullList) {
-                        if (row.name!!.toLowerCase().contains(constraint.toString().toLowerCase())) {
-                            println("Name ${row.name}")
-                            filterList.add(row)
-                        }
-                    }
-                }
-                val filterResults = FilterResults()
-                filterResults.values = filterList
-                return filterResults
-            }
 
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                val list = results?.values as MutableList<Repo>
-                filteredList.clear()
-                filteredList.addAll(list)
-                notifyDataSetChanged()
-                noResultFound.onNoResultFound(filteredList.size)
-            }
-        }
-    }
 }
 
 

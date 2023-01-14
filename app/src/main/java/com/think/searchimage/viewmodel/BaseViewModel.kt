@@ -9,6 +9,7 @@ import com.think.searchimage.remote.Event
 import com.think.searchimage.remote.NetworkResponse
 import kotlinx.coroutines.*
 import java.io.IOException
+import java.time.Duration
 
 open class BaseViewModel : ViewModel() {
 
@@ -50,7 +51,7 @@ open class BaseViewModel : ViewModel() {
         }
     }
 
-    fun <T : Any> ioThenMain(work: suspend (() -> T?), callback: ((T?) -> Unit)? = null): Job =
+    fun <T : Any> ioThenMain( work: suspend (() -> T?),  callback: ((T?) -> Unit)? ): Job =
         viewModelScope.launch(Dispatchers.Main) {
             val data = viewModelScope.async(Dispatchers.IO) {
                 return@async work()
@@ -68,4 +69,12 @@ open class BaseViewModel : ViewModel() {
                 work()
             } else work()
         }
-}
+
+     fun startCoroutineTimer(delayMillis: Long = 0, initialDelay: Long = 0,  action: () -> Unit) = viewModelScope.launch {
+        delay(initialDelay)
+            while (true) {
+                action()
+                delay(delayMillis)
+            }
+        }
+    }

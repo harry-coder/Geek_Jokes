@@ -16,5 +16,12 @@ interface ApiInterface {
         @Query("per_page") itemsPerPage: Int
     ): GenericResponse<RepoList>
 
+    @GET("https://geek-jokes.sameerkumar.website/api")
+    suspend fun getJokes(
+    ): GenericResponse<String>
+
+
 }
+
+
 typealias GenericResponse<S> = NetworkResponse<S, BaseError>
